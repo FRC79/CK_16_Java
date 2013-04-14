@@ -2,37 +2,43 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.teamkrunch.ck16.hopper;
+package com.teamkrunch.ck16.rollers;
 
 import com.teamkrunch.ck16.CommandBase;
+import com.teamkrunch.ck16.RobotMap;
 
 /**
  *
  * @author sebastian
  */
-public class RetractLoadPiston extends CommandBase {
+public class RunRollersWithBeams extends CommandBase {
     
-    private boolean isFinished;
-    
-    public RetractLoadPiston() {
+    public RunRollersWithBeams() {
+        requires(rollers);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        isFinished = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-        if(!isFinished){
-            hopper.retractLoadPiston();
-            isFinished = true;
+    protected void execute() 
+    {
+        // Roll the rollers until the hopperState is full
+        if(!hopperState.isFull())
+        {
+            rollers.set(RobotMap.ROLLER_POWER);
+        }
+        else
+        {
+            // When it's full, stop the rollers.
+            rollers.stop();
         }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isFinished;
+        return false;
     }
 
     // Called once after isFinished returns true

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.teamkrunch.ck16.hopper;
+package com.teamkrunch.ck16.rollers;
 
 import com.teamkrunch.ck16.CommandBase;
 import com.teamkrunch.ck16.RobotMap;
@@ -11,33 +11,37 @@ import com.teamkrunch.ck16.RobotMap;
  *
  * @author sebastian
  */
-public class RunRollersWithBeams extends CommandBase {
+public class RollDiscIn extends CommandBase {
     
-    public RunRollersWithBeams() {
+    private boolean isFinished, runsForever;
+    
+    public RollDiscIn() {
+        
+    }
+    
+    public RollDiscIn(boolean runContinously){
+        requires(rollers);
+        runsForever = runContinously;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        isFinished = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() 
-    {
-        // Roll the rollers until the hopper is full
-        if(!hopper.isFull())
-        {
-            hopper.setRoller(RobotMap.ROLLER_POWER);
-        }
-        else
-        {
-            // When it's full, stop the rollers.
-            hopper.stopRoller();
+    protected void execute() {
+        // Run this infinitely so that something else has to stop it.
+        rollers.set(RobotMap.ROLLER_POWER);
+        
+        if(!runsForever){
+            isFinished = true;
         }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isFinished;
     }
 
     // Called once after isFinished returns true

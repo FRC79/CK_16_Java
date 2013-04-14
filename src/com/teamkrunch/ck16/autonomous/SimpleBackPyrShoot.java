@@ -17,15 +17,17 @@ public class SimpleBackPyrShoot extends CommandBase {
     private boolean isFinished;
     
     public SimpleBackPyrShoot() {
-        requires(shooterPistons);
+        requires(firePiston);
         requires(shooterWheels);
-        requires(hopper);
+        requires(rollers);
+        requires(loadPiston);
         requires(hanger);
+        requires(tiltPiston);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        shooterPistons.TiltDown(); // We want to start tilted down.
+        tiltPiston.TiltDown(); // We want to start tilted down.
         hanger.retract(); // We want to start with the hanger retracted.
         isFinished = false;
     }
@@ -39,24 +41,24 @@ public class SimpleBackPyrShoot extends CommandBase {
         Timer.delay(4.0);
         
         // Fire Disc 1
-        shooterPistons.fireThenRetractFirePiston();
+        firePiston.fireThenRetract();
         
         // Load Disc 2
-        hopper.fireThenRetractLoadPiston();
+        loadPiston.fireThenRetract();
         
         // Fire Disc 2
-        shooterPistons.fireThenRetractFirePiston();
+        firePiston.fireThenRetract();
         
         // Roll Disc 3 in place
-        hopper.setRoller(RobotMap.ROLLER_POWER);
+        rollers.set(RobotMap.ROLLER_POWER);
         Timer.delay(3.0);
-        hopper.stopRoller();
+        rollers.stop();
         
         // Load Disc 3
-        hopper.fireThenRetractLoadPiston();
+        loadPiston.fireThenRetract();
         
         // Fire Disc 3
-        shooterPistons.fireThenRetractFirePiston();
+        firePiston.fireThenRetract();
         
         // Stop spinning shooter wheels
         shooterWheels.stop();

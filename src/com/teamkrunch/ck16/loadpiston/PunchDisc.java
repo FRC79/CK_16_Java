@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.teamkrunch.ck16.hopper;
+package com.teamkrunch.ck16.loadpiston;
 
 import com.teamkrunch.ck16.CommandBase;
 import com.teamkrunch.ck16.RobotMap;
@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class PunchDisc extends CommandBase {
     
     public PunchDisc() {
+        requires(loadPiston);
     }
 
     // Called just before this Command runs the first time
@@ -24,18 +25,18 @@ public class PunchDisc extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-        if(hopper.isDiscReadyToLoad())
+        if(hopperState.isDiscReadyToLoad())
         {
             /* If the fire piston isn't locked, punch the next disc into 
              * the fire chamber. */
-            if(!hopper.isLoadPistonLocked() && !hopper.isDiscInChamber())
+            if(!loadPiston.isLocked() && !hopperState.isDiscInChamber())
             {
                 // Wait for disc to transfer completely to punch zone.
                 Timer.delay(RobotMap.ROLLER_TO_PUNCH_ZONE_DELAY);
                 
-                hopper.extendLoadPiston(); // Punch down to load.
+                loadPiston.extend(); // Punch down to load.
                 Timer.delay(RobotMap.PISTON_DELAY); // Wait for the piston to go down.
-                hopper.retractLoadPiston(); // Pull piston back up.
+                loadPiston.retract(); // Pull piston back up.
                 Timer.delay(RobotMap.PISTON_DELAY); // Wait for the piston to come up.
             }
         }

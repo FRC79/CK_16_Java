@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.teamkrunch.ck16.shooterpistons;
+package com.teamkrunch.ck16.tiltpiston;
 
 import com.teamkrunch.ck16.CommandBase;
 import com.teamkrunch.ck16.RobotMap;
@@ -16,7 +16,7 @@ public class InvertTiltState extends CommandBase {
     private boolean isFinished;
     
     public InvertTiltState() {
-        requires(shooterPistons); // This would prevent shooting while tilting.
+        requires(tiltPiston); 
         setTimeout(RobotMap.PISTON_DELAY); // Wait time to finish task.
     }
 
@@ -28,7 +28,7 @@ public class InvertTiltState extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if(!isFinished){
-            shooterPistons.invertCurrentTiltState();
+            tiltPiston.invertCurrentTiltState();
             isFinished = true;
         }
     }

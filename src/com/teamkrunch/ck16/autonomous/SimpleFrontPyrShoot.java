@@ -17,15 +17,17 @@ public class SimpleFrontPyrShoot extends CommandBase {
     private boolean isFinished;
     
     public SimpleFrontPyrShoot() {
-        requires(shooterPistons);
+        requires(firePiston);
         requires(shooterWheels);
-        requires(hopper);
+        requires(rollers);
+        requires(loadPiston);
         requires(hanger);
+        requires(tiltPiston);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        shooterPistons.TiltUp(); // We want to start tilted up.
+        tiltPiston.TiltUp(); // We want to start tilted up.
         hanger.extend(); // We want to start with the hanger extended.
         
         isFinished = false;
@@ -40,13 +42,13 @@ public class SimpleFrontPyrShoot extends CommandBase {
         Timer.delay(4.0);
         
         // Fire Disc 1
-        shooterPistons.fireThenRetractFirePiston();
+        firePiston.fireThenRetract();
         
         // Load Disc 2
-        hopper.fireThenRetractLoadPiston();
+        loadPiston.fireThenRetract();
         
         // Fire Disc 2
-        shooterPistons.fireThenRetractFirePiston();
+        firePiston.fireThenRetract();
         
         // Stop spinning shooter wheels
         shooterWheels.stop();

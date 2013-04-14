@@ -4,6 +4,8 @@
  */
 package com.teamkrunch.ck16.hopper;
 
+import com.teamkrunch.ck16.loadpiston.PunchDisc;
+import com.teamkrunch.ck16.rollers.RunRollersWithBeams;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**

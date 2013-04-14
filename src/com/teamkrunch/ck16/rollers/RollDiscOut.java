@@ -2,24 +2,25 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.teamkrunch.ck16.shooterpistons;
+package com.teamkrunch.ck16.rollers;
 
 import com.teamkrunch.ck16.CommandBase;
+import com.teamkrunch.ck16.RobotMap;
 
 /**
  *
  * @author sebastian
  */
-public class RetractFirePiston extends CommandBase {
+public class RollDiscOut extends CommandBase {
     
     private boolean isFinished, runsForever;
     
-    public RetractFirePiston() {
+    public RollDiscOut() {
         this(false);
     }
     
-    public RetractFirePiston(boolean runContinuously){
-        requires(shooterPistons);
+    public RollDiscOut(boolean runContinuously){
+        requires(rollers);
         runsForever = runContinuously;
     }
 
@@ -30,9 +31,8 @@ public class RetractFirePiston extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        // Run this infinitely so that something else needs to stop it.
-        shooterPistons.retractFirePiston();
-        hopper.setLoadPistonLocked(false); // Allow load piston to punch down.
+        // Run this infinitely so that something else has to stop it.
+        rollers.set(-RobotMap.ROLLER_POWER);
         
         if(!runsForever){
             isFinished = true;

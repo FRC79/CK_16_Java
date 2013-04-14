@@ -2,26 +2,25 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.teamkrunch.ck16.hopper;
+package com.teamkrunch.ck16.firepiston;
 
 import com.teamkrunch.ck16.CommandBase;
-import com.teamkrunch.ck16.RobotMap;
 
 /**
  *
  * @author sebastian
  */
-public class RollDiscIn extends CommandBase {
+public class ExtendFirePiston extends CommandBase {
     
     private boolean isFinished, runsForever;
     
-    public RollDiscIn() {
-        
+    public ExtendFirePiston() {
+        this(false);
     }
     
-    public RollDiscIn(boolean runContinously){
-        requires(hopper);
-        runsForever = runContinously;
+    public ExtendFirePiston(boolean runContinuously){
+        requires(firePiston);
+        runsForever = runContinuously;
     }
 
     // Called just before this Command runs the first time
@@ -31,8 +30,9 @@ public class RollDiscIn extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        // Run this infinitely so that something else has to stop it.
-        hopper.setRoller(RobotMap.ROLLER_POWER);
+        // Run this infinitely to wait for something else to stop it.
+        firePiston.extend();
+        loadPiston.setLocked(true); // Lock the load piston from punching down.
         
         if(!runsForever){
             isFinished = true;

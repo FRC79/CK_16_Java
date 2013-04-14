@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.teamkrunch.ck16.hopper;
+package com.teamkrunch.ck16.firepiston;
 
 import com.teamkrunch.ck16.CommandBase;
 
@@ -10,15 +10,16 @@ import com.teamkrunch.ck16.CommandBase;
  *
  * @author sebastian
  */
-public class ExtendLoadPiston extends CommandBase {
+public class RetractFirePiston extends CommandBase {
     
     private boolean isFinished, runsForever;
     
-    public ExtendLoadPiston() {
+    public RetractFirePiston() {
         this(false);
     }
     
-    public ExtendLoadPiston(boolean runContinuously){
+    public RetractFirePiston(boolean runContinuously){
+        requires(firePiston);
         runsForever = runContinuously;
     }
 
@@ -29,8 +30,9 @@ public class ExtendLoadPiston extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        // Run this infinitely so that something else has to stop it.
-        hopper.extendLoadPiston();
+        // Run this infinitely so that something else needs to stop it.
+        firePiston.retract();
+        loadPiston.setLocked(false); // Allow load piston to punch down.
         
         if(!runsForever){
             isFinished = true;

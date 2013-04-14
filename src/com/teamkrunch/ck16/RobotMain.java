@@ -11,19 +11,18 @@ import com.teamkrunch.ck16.autonomous.SimpleBackPyrShoot;
 import com.teamkrunch.ck16.autonomous.SimpleFrontPyrShoot;
 import com.teamkrunch.ck16.compressor.RunCompressor;
 import com.teamkrunch.ck16.drivetrain.ArcadeDrive;
+import com.teamkrunch.ck16.firepiston.ExtendFirePiston;
 import com.teamkrunch.ck16.hanger.InvertHangerState;
 import com.teamkrunch.ck16.hopper.AutoLoad;
-import com.teamkrunch.ck16.hopper.ExtendLoadPiston;
-import com.teamkrunch.ck16.hopper.RetractLoadPiston;
-import com.teamkrunch.ck16.hopper.RollDiscIn;
-import com.teamkrunch.ck16.hopper.RollDiscOut;
+import com.teamkrunch.ck16.loadpiston.ExtendLoadPiston;
+import com.teamkrunch.ck16.loadpiston.RetractLoadPiston;
 import com.teamkrunch.ck16.misc.CancelCommand;
 import com.teamkrunch.ck16.misc.DoNothing;
 import com.teamkrunch.ck16.misc.Wait;
-import com.teamkrunch.ck16.shooterpistons.ExtendFirePiston;
-import com.teamkrunch.ck16.shooterpistons.InvertTiltState;
+import com.teamkrunch.ck16.rollers.RollDiscIn;
+import com.teamkrunch.ck16.rollers.RollDiscOut;
 import com.teamkrunch.ck16.shooterwheels.SpinShooterWheels;
-
+import com.teamkrunch.ck16.tiltpiston.InvertTiltState;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -79,7 +78,7 @@ public class RobotMain extends IterativeRobot {
                 autoLoadCommand : new CancelCommand(autoLoadCommand));
         CommandBase.oi.buttonExtendFirePiston.whileHeld(new ExtendFirePiston(true));
         CommandBase.oi.buttonExtendFirePiston.whenReleased(new Wait(RobotMap.AUTOLOAD_START_DELAY, 
-                CommandBase.shooterPistons));
+                CommandBase.firePiston));
         CommandBase.oi.buttonForwardRollers.whileHeld(new RollDiscIn(true));
         CommandBase.oi.buttonReverseRollers.whileHeld(new RollDiscOut(true));
         CommandBase.oi.buttonManualLoadPiston.whenPressed(new CancelCommand(autoLoadCommand));

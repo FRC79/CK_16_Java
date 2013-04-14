@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.teamkrunch.ck16.shooterpistons;
+package com.teamkrunch.ck16.rollers;
 
 import com.teamkrunch.ck16.CommandBase;
 
@@ -10,16 +10,16 @@ import com.teamkrunch.ck16.CommandBase;
  *
  * @author sebastian
  */
-public class ExtendFirePiston extends CommandBase {
+public class StopRollers extends CommandBase {
     
     private boolean isFinished, runsForever;
     
-    public ExtendFirePiston() {
+    public StopRollers(){
         this(false);
     }
     
-    public ExtendFirePiston(boolean runContinuously){
-        requires(shooterPistons);
+    public StopRollers(boolean runContinuously) {
+        requires(rollers);
         runsForever = runContinuously;
     }
 
@@ -30,9 +30,8 @@ public class ExtendFirePiston extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        // Run this infinitely to wait for something else to stop it.
-        shooterPistons.extendFirePiston();
-        hopper.setLoadPistonLocked(true); // Lock the load piston from punching down.
+        // Run this infinitely so that something else has to stop it.
+        rollers.stop();
         
         if(!runsForever){
             isFinished = true;
@@ -41,7 +40,7 @@ public class ExtendFirePiston extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isFinished;
+        return false;
     }
 
     // Called once after isFinished returns true

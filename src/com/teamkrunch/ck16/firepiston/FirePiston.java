@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.teamkrunch.ck16.shooterpistons;
+package com.teamkrunch.ck16.firepiston;
 
 import com.teamkrunch.ck16.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -14,66 +14,41 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  * @author sebastian
  */
-public class ShooterPistons extends Subsystem {
-
-    private boolean isTiltedUp, isFirePistonExtended;
-    private DoubleSolenoid tilt;
+public class FirePiston extends Subsystem {
+    private boolean isFirePistonExtended;
     private Solenoid fire;
     
-    public ShooterPistons(){
-        isTiltedUp = false;
+    public FirePiston(){
         isFirePistonExtended = false;
         fire = RobotMap.firePiston;
-        tilt = RobotMap.tiltPiston;
     }
     
-    public void setFirePiston(boolean state){
+    public void set(boolean state){
         fire.set(state);
         isFirePistonExtended = state;
     }
     
-    public boolean isFirePistonExtended(){
+    public boolean isExtended(){
         return isFirePistonExtended;
     }
     
-    public void extendFirePiston(){
-        setFirePiston(true);
+    public void extend(){
+        set(true);
     }
     
-    public void retractFirePiston(){
-        setFirePiston(false);
+    public void retract(){
+        set(false);
     }
     
-    public void invertCurrentFirePistonState(){
-        setFirePiston(!isFirePistonExtended());
+    public void invertCurrentState(){
+        set(!isExtended());
     }
     
-    public void fireThenRetractFirePiston(){
-        extendFirePiston();
+    public void fireThenRetract(){
+        extend();
         Timer.delay(RobotMap.PISTON_DELAY);
-        retractFirePiston();
+        retract();
         Timer.delay(RobotMap.PISTON_DELAY);
-    }
-    
-    public void setTilt(boolean state){
-        tilt.set(state ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
-        isTiltedUp = state;
-    }
-    
-    public boolean isTiltedUp(){
-        return isTiltedUp;
-    }
-    
-    public void TiltUp(){
-        setTilt(true);
-    }
-    
-    public void TiltDown(){
-        setTilt(false);
-    }
-    
-    public void invertCurrentTiltState(){
-        setTilt(!isTiltedUp());
     }
     
     public void initDefaultCommand() {
